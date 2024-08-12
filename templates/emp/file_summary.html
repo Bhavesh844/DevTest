@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Summary</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .summary-card {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        .summary-header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+        }
+        .summary-body {
+            padding: 20px;
+        }
+        .badge-pill {
+            margin-left: 5px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+
+        <!-- Summary Report -->
+        <div class="summary-card">
+            <div class="summary-header">
+                <h3>Summary Details</h3>
+            </div>
+            <div class="summary-body">
+                <p><strong>Total Rows:</strong> <span class="badge badge-info badge-pill">{{ summary_report.total_rows }}</span></p>
+                
+                <p><strong>Columns:</strong></p>
+                <ul class="list-group">
+                    {% for col in summary_report.columns %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ col }}
+                            <span class="badge badge-primary badge-pill">{{ loop.index }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                
+                <h4 class="mt-4">First Few Rows:</h4>
+                <div class="table-responsive"> <!-- Enables horizontal scrolling if needed -->
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                {% for col in summary_report.columns %}
+                                    <th>{{ col }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in summary_report.first_rows %}
+                                <tr>
+                                    {% for cell in row %}
+                                        <td>{{ cell }}</td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <a href="{% url 'home' %}" class="btn btn-primary mt-4">Back to Home</a>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
